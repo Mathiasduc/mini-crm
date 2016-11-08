@@ -1,0 +1,27 @@
+{
+  "name": "Mini-CRM",
+  "version": "1.0.0",
+  "description": "### Étape 1 : * Créez un serveur express  * Récupérez le fichier json `crm.json` * Inserez les informations dans le `index.html`",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SimplonTlse02/Mini-CRM.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SimplonTlse02/Mini-CRM/issues"
+  },
+  "homepage": "https://github.com/SimplonTlse02/Mini-CRM#readme",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0",
+    "jquery": "^3.1.1",
+    "mongoose": "^4.6.6",
+    "semantic-ui": "^2.2.6"
+  }
+}

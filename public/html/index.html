@@ -1,0 +1,64 @@
+ <!DOCTYPE html>
+ <html lang="en">
+ <head>
+ 	<meta charset="UTF-8">
+ 	<title>CRM form</title>
+ 	<link rel="stylesheet" href="../../node_modules/semantic-ui/dist/semantic.css">
+ 	<link rel="stylesheet" href="../css/style.css">
+ </head>
+ <body>
+ 	<div class="ui grid main">
+ 		<div class="ten wide column">
+ 			<form action="/clients/add" class="ui form">
+ 				<h4 class="ui dividing header">Contact Info</h4>
+ 				<div class="field">
+ 					<label >Name</label>
+ 					<div class="two fields">
+ 						<div class="field">
+ 							<input type="text" value="Test" name="first_name" placeholder="First Name">
+ 						</div>
+ 						<div class="field">
+ 							<input type="text" value="Test" name="last_name" placeholder="Last Name">
+ 						</div>
+ 					</div>
+ 				</div>
+ 				<div class="field">
+ 					<label >Work</label>
+ 					<div class="two fields">
+ 						<div class="field">
+ 							<input type="text" value="Test" name="company" placeholder="Company">
+ 						</div>
+ 						<div class="field">
+ 							<input type="text" value="Test" name="role" placeholder="Function in the company">
+ 						</div>
+ 					</div>
+ 				</div>
+ 				<div class="field">
+ 					<label >Contacts</label>
+ 					<div class="two fields">
+ 						<div class="field">
+ 							<input type="text" value="Test" name="phone" placeholder="Phone number">
+ 						</div>
+ 						<div class="field">
+ 							<input type="text" value="Test" name="email" placeholder="E-mail adress">
+ 						</div>
+ 					</div>
+ 				</div>
+ 				<div class="field">
+ 					<label >Description</label>
+ 					<textarea name="description" value="Test" id="description" rows="10"></textarea>
+ 				</div>
+ 				<button id="form_button" formmethod="post" class="ui primary submit button">Submit</button>
+ 				<div class="ui error message"></div>
+ 			</form>
+ 		</div>
+ 		<div id="clients" class="six wide column">
+ 		</div>
+ 	</div>
+
+
+ 	<script src="../../node_modules/jquery/dist/jquery.js"></script>
+ 	<script src="../../node_modules/semantic-ui/dist/semantic.js"></script>
+ 	<script src="../javascript/app.js"></script>
+ </body>		
+ </html>
