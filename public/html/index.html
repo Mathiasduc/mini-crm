@@ -9,7 +9,7 @@
  <body>
  	<div class="ui grid main">
  		<div class="ten wide column">
- 			<form action="/clients/add" class="ui form">
+ 			<div class="ui form">
  				<h4 class="ui dividing header">Contact Info</h4>
  				<div class="field">
  					<label >Name</label>
@@ -48,9 +48,9 @@
  					<label >Description</label>
  					<textarea name="description" value="Test" id="description" rows="10"></textarea>
  				</div>
- 				<button id="form_button" formmethod="post" class="ui primary submit button">Submit</button>
+ 				<button id="form_button" class="ui primary submit button">Submit</button>
  				<div class="ui error message"></div>
- 			</form>
+ 			</div>
  		</div>
  		<div id="clients" class="six wide column">
  		</div>

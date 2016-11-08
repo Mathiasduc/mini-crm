@@ -7,39 +7,37 @@
 		clientsSelector: $("#clients"),
 
 		init: function(){
-/*			this.formSettings();
-*/			this.displayList();
-/*			this.listeners();
-*/		},
+			this.formSettings();
+			this.displayList();
+			this.listeners();
+		},
 
-		/*listeners: function(){
+		listeners: function(){
 			var me = this;
 			$('#form_button').on('click', (event)=>{
 				event.preventDefault();
-				me.addNewContact.call(me)
+				me.addNewContact.call(me);
 			});
-		},*/
+		},
 
 		displayList: function(){
 			var me = this;
 			var jqXHR = $.ajax('/clients/list')
 			.done(function(data){
-				console.log(data);
 				me.clientsSelector.html(data);
 			});
 		},
 
-		/*addNewContact: function(){
+		addNewContact: function(){
 			var me = this;
 			var valueForm = this.formSelector.form('get values');
 			var jqXHR = $.post(me.urlServer + "/clients/add", valueForm)
 			.done(function(data){
-				console.log(data);
 				me.clientsSelector.html(data);
 			});
-		},*/
+		},
 
-		/*formSettings: function(){
+		formSettings: function(){
 			this.formSelector
 			.form({
 				fields: {
@@ -52,11 +50,11 @@
 					email: 		'empty',
 				}
 			});
-		},*/
+		},
 
-		/*successAjax: function(jqXHR){
-			console.log("great succes!\n", jqXHR)
-		},*/
+		successAjax: function(jqXHR){
+			/*console.log("great succes!\n", jqXHR);*/
+		},
 	}
 
 	app.init();
