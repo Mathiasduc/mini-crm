@@ -15,8 +15,11 @@ app.use(jsonParser,function(req,rep,next){
 
 //routes
 app.get('/',(req,res)=>{res.sendFile(__dirname + '/public/html/index.html')});
-app.get('/clients/list', function(req, res){
+app.get('/clients/list/display', function(req, res){
 	controller.getParsedJSON(req, controller.getDisplayClients, function(toSend){res.json(toSend);});
+});
+app.get('/clients/list', function(req, res){
+	controller.getParsedJSON(req, false, function(toSend){res.json(toSend);});
 });
 
 app.post('/clients/add', jsonParser, function(req, res){

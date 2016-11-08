@@ -9,43 +9,48 @@
  <body>
  	<div class="ui grid main">
  		<div class="ten wide column">
+ 			<h2 id="title">Add new client:</h2>
  			<div class="ui form">
  				<h4 class="ui dividing header">Contact Info</h4>
+ 				<input id="editedID" hidden type="text">
  				<div class="field">
- 					<label >Name</label>
  					<div class="two fields">
  						<div class="field">
- 							<input type="text" value="Test" name="first_name" placeholder="First Name">
+ 							<label for="first_name">First name</label>
+ 							<input id="first_name" type="text" value="Test" name="first_name" placeholder="First Name">
  						</div>
  						<div class="field">
- 							<input type="text" value="Test" name="last_name" placeholder="Last Name">
+ 							<label for="last_name" >Last name</label>
+ 							<input type="text" value="Test" id="last_name" name="last_name" placeholder="Last Name">
  						</div>
  					</div>
  				</div>
  				<div class="field">
- 					<label >Work</label>
  					<div class="two fields">
  						<div class="field">
- 							<input type="text" value="Test" name="company" placeholder="Company">
+ 							<label for="company">Company</label>
+ 							<input type="text" id="company" value="Test" name="company" placeholder="Evil.corp">
  						</div>
  						<div class="field">
- 							<input type="text" value="Test" name="role" placeholder="Function in the company">
+ 							<label for="role">Role</label>
+ 							<input type="text" id="role" value="Test" name="role" placeholder="Function in the company">
  						</div>
  					</div>
  				</div>
  				<div class="field">
- 					<label >Contacts</label>
  					<div class="two fields">
  						<div class="field">
- 							<input type="text" value="Test" name="phone" placeholder="Phone number">
+ 							<label for="phone">Phone</label>
+ 							<input type="text" id="phone" value="Test" name="phone" placeholder="Phone number">
  						</div>
  						<div class="field">
- 							<input type="text" value="Test" name="email" placeholder="E-mail adress">
+ 						<label for="email">Email</label>
+ 							<input type="text" value="Test" id="email" name="email" placeholder="awesome@wonderfull.wow">
  						</div>
  					</div>
  				</div>
  				<div class="field">
- 					<label >Description</label>
+ 					<label for="des">Description</label>
  					<textarea name="description" value="Test" id="description" rows="10"></textarea>
  				</div>
  				<button id="form_button" class="ui primary submit button">Submit</button>

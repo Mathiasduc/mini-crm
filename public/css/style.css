@@ -1,6 +1,16 @@
 .main.main.main.main.main.main{
-	max-width: 85%;
+	max-width: 90%;
 	margin-top: 50px;
 	margin-right: auto;
 	margin-left: auto;
+}
+
+.client.client.client.client.client{
+	cursor: pointer;
+	background-color: silver;
+	margin: 5px;
+}
+
+.edit{
+	background-color: orange;
 }

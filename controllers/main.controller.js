@@ -6,7 +6,11 @@ function getParsedJSON(req ,callback, sendResponse){
 		if(err){console.log(err, "\nfail readJson\n");}
 		var customers = JSON.parse(data);
 		console.log("\navant ajout\n",customers);
+		if (callback){
 		callback(req, customers, sendResponse);
+		}else{
+			sendResponse(customers);
+		}
 	});
 }
 
@@ -26,7 +30,7 @@ function addClient(req, customers, sendResponse){
 function getDisplayClients(req, customers, sendResponse){
 	var toSend = "";
 	for (var i = 0; i < customers.length; i++) {
-		var client = '<div class="client'+i+' ui grid"><div class="first_name height wide column">' +
+		var client = '<div class="client ui grid"><input id="clientID" value="'+ customers[i].id +'" hidden type="text"><div class="first_name height wide column">' +
 		customers[i].first_name +'</div><div class="last_name height wide column">'+ customers[i].last_name +
 		'</div><div class="company height wide column">'+ customers[i].company+ '</div><div class="role '+
 		'height wide column">'+ customers[i].role +'</div><div class="email height wide column">'+
