@@ -8,13 +8,33 @@
 			title: $("#title"), clients: $("#clients"), form: $('.form'),
 			first_name: $("#first_name"), last_name: $("#last_name"),company: $("#company"),
 			role: $("#role"), phone: $("#phone"), email: $("#email"), description: $("#description"),
-			go_to_add: $("#go_to_add"), form_button: $("#form_button"), add: $("#add")
+			go_to_add: $("#go_to_add"), form_button: $("#form_button"), add: $("#add"),
+			search_select: $("#search_select"), eddit_button: $("#edit_button"),
+			main: $("#main"),
 		},
 
 		init: function(){
-			this.formSettings();
-			this.displayList();
+			this.getHomePage();
 			this.listeners();
+		},
+
+		getHomePage: function(){
+			var me = this;
+			var jqXHR = $.ajax('/public/html/home.html')
+			.done(function(data){
+				me.selectors.main.html(data);
+				me.formSettings();
+				me.dropdownFill();
+			});
+		},
+
+		getEditPage: function(){
+			var jqXHR = $.ajax('/public/html/edit.html')
+			.done(function(data){
+				console.log('\ncontenu edit:\n',data);
+				me.selectors.main.html(data);
+				/*me.formSettings();*/
+			});
 		},
 
 		listeners: function(){
@@ -25,9 +45,8 @@
 				me.addNewContact.call(me);
 			});
 
-			me.selectors.clients.on('click', ".client",(event)=>{
-				me.showEditForm();
-				me.formFillValue.call(me, event);
+			me.selectors.eddit_button.on('click',(event)=>{
+				me.showEditForm(me.formFillValue);
 			});
 
 			$(".main").on('click',"#add",(event)=>{
@@ -35,6 +54,7 @@
 				event.preventDefault();
 				me.showAddForm.call(me);
 			});
+
 
 			/*document.getElementById("clients").addEventListener("click", function(event) {
 				console.log(event.target.parentNode.classList[0]);
@@ -44,11 +64,22 @@
 			}*/
 		},
 
+		dropdownFill: function(){
+			var me = this;
+			var jqXHR = $.ajax('/clients/list/dropdown')
+			.done(function(data){
+				console.log('\ncontenu drop:\n',data);
+				me.selectors.search_select.html(data);
+				me.dropdownSettings();
+			});
+		},
+
 		displayList: function(){
 			var me = this;
 			var jqXHR = $.ajax('/clients/list/display')
 			.done(function(data){
-				me.selectors.clients.html(data);
+				console.log("display list\n",data)
+				/*me.selectors.clients.html(data);*/
 			});
 		},
 
@@ -59,28 +90,6 @@
 			.done(function(data){
 				me.selectors.clients.html(data);
 			});
-		},
-
-		showEditForm: function(){
-			console.log("this",this);
-			this.selectors.form.addClass("edit");
-			this.selectors.title.html("Editing a client:");
-			this.selectors.go_to_add.html('<button id="add" class="ui secondary button">Stop edit and show list</button>');
-			this.selectors.clients.hide();
-		},
-
-		showAddForm: function(){
-			this.selectors.form.removeClass("edit");
-			this.selectors.title.html("Add new client:");
-			this.selectors.go_to_add.html('');
-			this.selectors.first_name.val("");
-			this.selectors.last_name.val("");
-			this.selectors.company.val("");
-			this.selectors.phone.val("");
-			this.selectors.description.val("");
-			this.selectors.email.val("");
-			this.selectors.role.val("");
-			this.selectors.clients.show();
 		},
 
 		formSettings: function(){
@@ -96,6 +105,25 @@
 					email: 		'empty',
 				}
 			});
+		},
+
+		dropdownSettings: function(){
+			var me = this;
+			console.log("drop setting ");
+			this.selectors.search_select
+			.dropdown({
+				onChange: function (value, text, choice) {
+					console.log(value);
+					console.log(text);
+					console.log(choice);
+					console.log(this);
+					me.showSelectedClient(value)
+				}
+			})
+		},
+
+		showSelectedClient: function(id){
+
 		},
 
 		formFillValue: function(event){
