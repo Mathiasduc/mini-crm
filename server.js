@@ -26,6 +26,9 @@ app.get('/clients/list', function(req, res){
 	controller.getParsedJSON(req, false, function(toSend){res.json(toSend);});
 });
 
+app.post('/clients/list/display', function(req, res){
+	controller.getParsedJSON(req, controller.getDisplayClients, function(toSend){res.json(toSend);});
+});
 app.post('/clients/add', jsonParser, function(req, res){
 	controller.getParsedJSON(req, controller.addClient, function(toSend){res.json(toSend);});
 });

@@ -4,18 +4,16 @@
 
 		urlServer: "http://192.168.1.107:8080",
 		selectors: { 
-			add_form: $("#add_form"), form_title: $("#form_title"),
-			title: $("#title"), clients: $("#clients"), form: $('.form'),
-			first_name: $("#first_name"), last_name: $("#last_name"),company: $("#company"),
-			role: $("#role"), phone: $("#phone"), email: $("#email"), description: $("#description"),
-			go_to_add: $("#go_to_add"), form_button: $("#form_button"), add: $("#add"),
-			search_select: $("#search_select"), eddit_button: $("#edit_button"),
+			form: $('.form'),
+			form_button: $("#form_button"),
+			search_select: $("#search_select"),
 			main: $("#main"),
 		},
 
 		init: function(){
-			this.getHomePage();
 			this.listeners();
+			this.dropdownFill();
+			this.formSettings();
 		},
 
 		getHomePage: function(){
@@ -23,17 +21,17 @@
 			var jqXHR = $.ajax('/public/html/home.html')
 			.done(function(data){
 				me.selectors.main.html(data);
-				me.formSettings();
 				me.dropdownFill();
+				me.formSettings();
 			});
 		},
 
-		getEditPage: function(){
+		getEditPage: function(id){
+			var me = this;
 			var jqXHR = $.ajax('/public/html/edit.html')
 			.done(function(data){
-				console.log('\ncontenu edit:\n',data);
 				me.selectors.main.html(data);
-				/*me.formSettings();*/
+				me.formFillValue(id);
 			});
 		},
 
@@ -42,53 +40,48 @@
 
 			me.selectors.form_button.on('click', (event)=>{
 				event.preventDefault();
-				me.addNewContact.call(me);
+				me.addNewClient.call(me);
 			});
 
-			me.selectors.eddit_button.on('click',(event)=>{
-				me.showEditForm(me.formFillValue);
+			me.selectors.main.on('click','#edit_button',(event)=>{
+				var id = this.selectors.search_select.dropdown("get value")[0];
+				console.log(id);
+				me.getEditPage(id);
 			});
 
-			$(".main").on('click',"#add",(event)=>{
-				console.log("add");
-				event.preventDefault();
-				me.showAddForm.call(me);
+			me.selectors.main.on('click','#to_home',(event)=>{
+				me.getHomePage();
 			});
 
+			me.selectors.main.on('click','#form_edit',(event)=>{
+				me.editClient
+			});
 
-			/*document.getElementById("clients").addEventListener("click", function(event) {
-				console.log(event.target.parentNode.classList[0]);
-				if(event.target.parentNode.classList[0] === "client"){
-					me.formFillValue(event.target.parentNode);
-				}
-			}*/
 		},
 
 		dropdownFill: function(){
 			var me = this;
 			var jqXHR = $.ajax('/clients/list/dropdown')
 			.done(function(data){
-				console.log('\ncontenu drop:\n',data);
-				me.selectors.search_select.html(data);
+				$("#search_select").html(data);
 				me.dropdownSettings();
 			});
 		},
 
-		displayList: function(){
+		/*displayList: function(id){
 			var me = this;
 			var jqXHR = $.ajax('/clients/list/display')
 			.done(function(data){
 				console.log("display list\n",data)
-				/*me.selectors.clients.html(data);*/
 			});
-		},
+		},*/
 
-		addNewContact: function(){
+		addNewClient: function(){
 			var me = this;
 			var valueForm = this.selectors.form.form('get values');
 			var jqXHR = $.post(me.urlServer + "/clients/add", valueForm)
 			.done(function(data){
-				me.selectors.clients.html(data);
+				me.dropdownFill();
 			});
 		},
 
@@ -109,53 +102,46 @@
 
 		dropdownSettings: function(){
 			var me = this;
-			console.log("drop setting ");
-			this.selectors.search_select
+			console.log("in drop setting ");
+			$("#search_select")
 			.dropdown({
 				onChange: function (value, text, choice) {
-					console.log(value);
-					console.log(text);
-					console.log(choice);
-					console.log(this);
 					me.showSelectedClient(value)
 				}
 			})
 		},
 
 		showSelectedClient: function(id){
-
+			console.log("in show selected , id:", id);
+			var jqXHR = $.post('/clients/list/display',{id: id})
+			.done(function(data){
+				$("#client").html(data);
+			});
 		},
 
-		formFillValue: function(event){
+		formFillValue: function(idSelected){
 			var me = this;
-			var idSelected = event.currentTarget.firstChild.value;
+			idSelected = parseInt(idSelected, 10);
 			var editedCustomer = {};
 			var customers = [];
 			var jqXHR = $.ajax('/clients/list')
 			.done(function(data){
 				customers = data;
-				console.log("event:\n", event, "\nid:\n", event.currentTarget.firstChild.value, "\ncustomers:\n", customers);
+				console.log("\nid:\n",idSelected, "\ncustomers:\n", customers);
 				for (var i = customers.length - 1; i >= 0; i--) {
-					if(customers[i].id === parseInt(idSelected, 10)){
+					if(customers[i].id === idSelected){
 						break;
 					}
 					if (i === 0){me.error("Client not found"); return;}
 				}
 				editedCustomer = customers[i];
-				console.log(i, customers, editedCustomer);
-				me.selectors.first_name.val(editedCustomer.first_name);
-				me.selectors.last_name.val(editedCustomer.last_name);
-				me.selectors.company.val(editedCustomer.company);
-				me.selectors.phone.val(editedCustomer.phone);
-				me.selectors.description.val(editedCustomer.description);
-				me.selectors.email.val(editedCustomer.email);
-				me.selectors.role.val(editedCustomer.role);
+				console.log(i, editedCustomer);
+				for(var key in editedCustomer){
+					$('#'+ key).val(editedCustomer[key]);
+				}
 			});
 		},
 
-		successAjax: function(jqXHR){
-			/*console.log("great succes!\n", jqXHR);*/
-		},
 		error: function(message, ...args){
 			console.log(message);
 			if(args){	

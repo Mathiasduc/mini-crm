@@ -1,4 +1,4 @@
-.main.main.main.main.main.main{
+#main{
 	max-width: 90%;
 	margin-top: 50px;
 	margin-right: auto;
@@ -11,7 +11,7 @@
 	margin: 5px;
 }
 
-.edit{
-	background-color: orange;
-	margin-bottom: 50px;
+.edit.edit.edit.edit.edit{
+	width: 100%;
+
 }
